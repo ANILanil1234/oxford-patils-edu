@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Oxford Patils Academy — Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:       #2563eb;
+      --blue-light: #eff6ff;
+      --blue-mid:   #bfdbfe;
+      --sky:        #e0f2fe;
+      --mint:       #ecfdf5;
+      --peach:      #fff7ed;
+      --white:      #ffffff;
+      --off-white:  #f8fafc;
+      --text:       #0f172a;
+      --text-soft:  #475569;
+      --text-muted: #94a3b8;
+      --border:     #e2e8f0;
+      --accent:     #0ea5e9;
+      --nav-h:      72px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--off-white); color: var(--text); overflow-x: hidden; }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 1px 12px rgba(0,0,0,0.06);
+      animation: slideDown 0.6s ease both;
+    }
+    @keyframes slideDown { from { transform: translateY(-100%); opacity:0; } to { transform: translateY(0); opacity:1; } }
+
+    .logo { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+    .logo-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--blue), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
+      font-weight: 700; color: #fff; flex-shrink: 0;
+    }
+    .logo-name { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .logo-tag { font-size: 0.6rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); display: block; }
+
+    .nav-links { display: flex; gap: 1.6rem; list-style: none; }
+    .nav-links a {
+      color: var(--text-soft); text-decoration: none; font-size: 0.85rem;
+      font-weight: 500; transition: color 0.2s; position: relative; padding-bottom: 3px;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: var(--blue); border-radius: 2px; transform: scaleX(0); transition: transform 0.2s;
+    }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-cta {
+      background: var(--blue); color: #fff; padding: 0.55rem 1.4rem;
+      border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.85rem;
+      transition: all 0.2s; box-shadow: 0 2px 8px rgba(37,99,235,0.3);
+    }
+    .nav-cta:hover { background: #1d4ed8; transform: translateY(-1px); }
+
+    /* Scroll margin for all sections */
+    #slider, #about, #programs, #events, #gallery, #admissions, #contact {
+      scroll-margin-top: calc(var(--nav-h) + 8px);
+    }
+
+    /* ── IMAGE SLIDER ── */
+    .slider-section {
+      margin-top: var(--nav-h);
+      position: relative;
+      width: 100%;
+      height: 80vh;
+      overflow: hidden;
+      background: #0f172a;
+    }
+
+    .slides-wrapper {
+      display: flex;
+      width: 500%;
+      height: 100%;
+      animation: autoSlide 20s ease-in-out infinite;
+    }
+
+    .slide {
+      width: 20%;
+      height: 100%;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      z-index: 0;
+    }
+
+    /* Slide backgrounds using gradients + emoji illustrations */
+    .slide-1 { background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%); }
+    .slide-2 { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
+    .slide-3 { background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #415a77 100%); }
+    .slide-4 { background: linear-gradient(135deg, #1e3a5f 0%, #2c5f8a 50%, #0ea5e9 100%); }
+    .slide-5 { background: linear-gradient(135deg, #0b3954 0%, #087e8b 50%, #00c6d7 100%); }
+
+    .slide-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+    }
+
+    .slide-visual {
+      position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+      font-size: clamp(8rem, 18vw, 16rem);
+      opacity: 0.18;
+      filter: blur(1px);
+      user-select: none;
+    }
+
+    .slide-content {
+      position: absolute;
+      left: 7%; top: 50%; transform: translateY(-50%);
+      z-index: 2; max-width: 600px;
+    }
+
+    .slide-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.9);
+      padding: 0.35rem 1rem; border-radius: 100px;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.5px;
+      margin-bottom: 1.4rem; backdrop-filter: blur(6px);
+    }
+
+    .slide-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.4rem, 5.5vw, 4.8rem);
+      font-weight: 700; line-height: 1.07; color: #fff;
+      margin-bottom: 1.2rem;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+    }
+    .slide-title em { color: #60a5fa; font-style: normal; }
+
+    .slide-desc {
+      font-size: clamp(0.88rem, 1.5vw, 1rem);
+      color: rgba(255,255,255,0.78);
+      line-height: 1.8; margin-bottom: 2rem; max-width: 460px;
+    }
+
+    .slide-btn {
+      display: inline-block;
+      background: var(--blue); color: #fff;
+      padding: 0.8rem 1.9rem; border-radius: 10px;
+      text-decoration: none; font-weight: 600; font-size: 0.9rem;
+      transition: all 0.25s;
+      box-shadow: 0 4px 18px rgba(37,99,235,0.45);
+    }
+    .slide-btn:hover { background: #1d4ed8; transform: translateY(-2px); }
+
+    /* Slider dots */
+    .slider-dots {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 0.6rem; z-index: 10;
+    }
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,0.35); border: none; cursor: pointer;
+      transition: all 0.3s; padding: 0;
+    }
+    .dot.active, .dot:hover { background: #fff; transform: scale(1.3); }
+
+    /* Slider arrows */
+    .slider-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      z-index: 10; background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; width: 48px; height: 48px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1.1rem; backdrop-filter: blur(6px);
+      transition: all 0.25s;
+    }
+    .slider-arrow:hover { background: rgba(255,255,255,0.22); transform: translateY(-50%) scale(1.08); }
+    .slider-arrow.prev { left: 2.5%; }
+    .slider-arrow.next { right: 2.5%; }
+
+    /* Slide counter */
+    .slide-counter {
+      position: absolute; bottom: 2rem; right: 4%;
+      color: rgba(255,255,255,0.5); font-size: 0.78rem;
+      font-weight: 600; letter-spacing: 1px; z-index: 10;
+    }
+    .slide-counter span { color: #fff; }
+
+    @keyframes autoSlide {
+      0%,18%   { transform: translateX(0); }
+      20%,38%  { transform: translateX(-20%); }
+      40%,58%  { transform: translateX(-40%); }
+      60%,78%  { transform: translateX(-60%); }
+      80%,98%  { transform: translateX(-80%); }
+      100%     { transform: translateX(0); }
+    }
+
+    /* ── TICKER ── */
+    .ticker {
+      background: var(--blue); padding: 0.65rem 0; overflow: hidden;
+      display: flex; align-items: center;
+    }
+    .ticker-label {
+      background: #1d4ed8; color: #fff; padding: 0.2rem 1.2rem;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      white-space: nowrap; margin-right: 2rem; flex-shrink: 0;
+    }
+    .ticker-track {
+      display: flex; gap: 3rem; animation: scrollLeft 28s linear infinite; white-space: nowrap;
+    }
+    .ticker-track span { font-size: 0.82rem; color: rgba(255,255,255,0.92); font-weight: 500; }
+    @keyframes scrollLeft { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+    /* ── SECTION BASE ── */
+    section { padding: 5.5rem 5%; }
+    .section-label {
+      display: inline-block; font-size: 0.7rem; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--blue); font-weight: 700;
+      margin-bottom: 0.7rem;
+      background: var(--blue-light); padding: 0.28rem 0.75rem; border-radius: 100px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif; font-size: clamp(1.9rem, 4vw, 2.7rem);
+      font-weight: 700; color: var(--text); line-height: 1.2; margin-bottom: 0.8rem;
+    }
+    .section-sub { color: var(--text-soft); font-size: 0.96rem; line-height: 1.75; max-width: 520px; }
+
+    /* ── ABOUT ── */
+    .about { background: var(--white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .about-img-wrap { position: relative; }
+    .about-img-box {
+      width: 100%;
+      aspect-ratio: 4/5;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(37,99,235,0.1);
+      border-left: 5px solid #2563eb;
+    }
+    .about-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .about-float {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      background: var(--blue); color: #fff; padding: 1.3rem 1.7rem;
+      border-radius: 16px; text-align: center;
+      box-shadow: 0 8px 24px rgba(37,99,235,0.3);
+    }
+    .about-float .big { font-family: 'Cormorant Garamond', serif; font-size: 2.3rem; font-weight: 700; display: block; line-height: 1; }
+    .about-float .small { font-size: 0.68rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; opacity: 0.85; }
+
+    .about-features { margin-top: 2rem; display: flex; flex-direction: column; gap: 1.2rem; }
+    .feature-item { display: flex; align-items: flex-start; gap: 1rem; }
+    .feature-icon {
+      width: 46px; height: 46px; border-radius: 12px; flex-shrink: 0;
+      background: var(--blue-light); display: flex; align-items: center;
+      justify-content: center; font-size: 1.3rem;
+    }
+    .feature-text h4 { font-size: 0.93rem; font-weight: 600; margin-bottom: 0.22rem; color: var(--text); }
+    .feature-text p { font-size: 0.82rem; color: var(--text-soft); line-height: 1.55; }
+
+    /* ── PROGRAMS ── */
+    .programs { background: var(--off-white); }
+    .programs-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem; }
+    .programs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+    .program-card {
+      background: var(--white); border-radius: 16px; padding: 2rem;
+      border: 1px solid var(--border); transition: all 0.3s;
+      cursor: pointer; position: relative; overflow: hidden;
+    }
+    .program-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--blue), var(--accent));
+      transform: scaleX(0); transition: transform 0.3s; transform-origin: left;
+    }
+    .program-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0,0,0,0.08); border-color: transparent; }
+    .program-card:hover::after { transform: scaleX(1); }
+
+    .prog-icon-wrap {
+      width: 52px; height: 52px; border-radius: 14px; margin-bottom: 1.2rem;
+      display: flex; align-items: center; justify-content: center; font-size: 1.6rem;
+    }
+    .prog-blue { background: var(--blue-light); }
+    .prog-sky  { background: var(--sky); }
+    .prog-mint { background: var(--mint); }
+    .prog-peach{ background: var(--peach); }
+
+    .program-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.22rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text); }
+    .program-card p { font-size: 0.84rem; color: var(--text-soft); line-height: 1.65; margin-bottom: 1.2rem; }
+    .program-link { font-size: 0.82rem; color: var(--blue); font-weight: 600; text-decoration: none; }
+    .program-link:hover { text-decoration: underline; }
+
+    /* ── EVENTS ── */
+    .events { background: var(--white); }
+    .events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+
+    .event-card {
+      border: 1px solid var(--border); border-radius: 14px; padding: 1.6rem;
+      transition: all 0.3s; background: var(--off-white);
+    }
+    .event-card:hover { border-color: var(--blue-mid); background: var(--blue-light); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(37,99,235,0.08); }
+
+    .event-date {
+      display: inline-flex; flex-direction: column; align-items: center;
+      background: var(--blue); color: #fff; padding: 0.5rem 0.9rem;
+      border-radius: 10px; margin-bottom: 1rem;
+    }
+    .event-date .day { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 700; line-height: 1; }
+    .event-date .month { font-size: 0.62rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+    .event-card h4 { color: var(--text); font-size: 0.95rem; font-weight: 600; margin-bottom: 0.4rem; }
+    .event-card p { color: var(--text-soft); font-size: 0.82rem; line-height: 1.55; }
+
+    /* ── GALLERY ── */
+    .gallery { background: var(--off-white); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 220px 220px;
+      gap: 1rem; margin-top: 2.5rem;
+    }
+    .gallery-item {
+      border-radius: 14px; overflow: hidden; position: relative;
+      cursor: pointer; background: var(--blue-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; transition: transform 0.3s;
+    }
+    .gallery-item:hover { transform: scale(1.02); }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-item.tall { grid-row: span 2; }
+    .gallery-item.wide { grid-column: span 2; }
+
+    .gallery-item:nth-child(1) { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .gallery-item:nth-child(2) { background: linear-gradient(135deg, #dcfce7, #bbf7d0); }
+    .gallery-item:nth-child(3) { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+    .gallery-item:nth-child(4) { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+    .gallery-item:nth-child(5) { background: linear-gradient(135deg, #e0e7ff, #c7d2fe); }
+    .gallery-item:nth-child(6) { background: linear-gradient(135deg, #ccfbf1, #99f6e4); }
+
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: rgba(37,99,235,0.75);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s;
+      color: #fff; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.5px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--white); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+
+    .testi-card {
+      background: var(--off-white); border-radius: 16px; padding: 2rem;
+      border: 1px solid var(--border); transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .testi-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.07); }
+    .testi-stars { color: #f59e0b; font-size: 0.85rem; margin-bottom: 1rem; letter-spacing: 2px; }
+    .testi-card p { font-size: 0.88rem; color: var(--text-soft); line-height: 1.75; margin-bottom: 1.5rem; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 0.8rem; }
+    .testi-avatar {
+      width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+      background: linear-gradient(135deg, var(--blue), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 700; font-size: 0.9rem;
+    }
+    .testi-name { font-weight: 600; font-size: 0.87rem; color: var(--text); }
+    .testi-role { font-size: 0.73rem; color: var(--text-muted); }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: linear-gradient(135deg, #1e40af 0%, #0ea5e9 100%);
+      text-align: center; padding: 5.5rem 5%; position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .cta-section h2 {
+      font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem);
+      color: #fff; margin-bottom: 1rem; position: relative;
+    }
+    .cta-section p { color: rgba(255,255,255,0.8); margin-bottom: 2rem; font-size: 1rem; position: relative; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; position: relative; }
+    .btn-white { background: #fff; color: var(--blue); padding: 0.85rem 2rem; border-radius: 10px; text-decoration: none; font-weight: 600; transition: all 0.25s; box-shadow: 0 4px 14px rgba(0,0,0,0.15); }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .btn-ghost { border: 1.5px solid rgba(255,255,255,0.5); color: #fff; padding: 0.85rem 2rem; border-radius: 10px; text-decoration: none; font-weight: 500; transition: all 0.25s; }
+    .btn-ghost:hover { background: rgba(255,255,255,0.12); border-color: #fff; }
+    .btn-primary {
+      background: var(--blue); color: #fff; padding: 0.85rem 2rem;
+      border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 0.92rem;
+      transition: all 0.25s; display: inline-block;
+      box-shadow: 0 4px 14px rgba(37,99,235,0.35);
+    }
+    .btn-primary:hover { background: #1d4ed8; transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer { background: #0f172a; color: rgba(255,255,255,0.5); padding: 4.5rem 5% 2rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+    .footer-brand-name { font-family: 'Cormorant Garamond', serif; color: #fff; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.8rem; }
+    .footer-brand p { font-size: 0.83rem; line-height: 1.7; max-width: 260px; margin-bottom: 1.2rem; }
+    .footer-contact p { font-size: 0.82rem; line-height: 2; }
+
+    .footer-col h5 { color: rgba(255,255,255,0.85); font-size: 0.78rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 1.2rem; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .footer-col ul li a { color: rgba(255,255,255,0.42); text-decoration: none; font-size: 0.83rem; transition: color 0.2s; }
+    .footer-col ul li a:hover { color: #60a5fa; }
+
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.5rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom p { font-size: 0.78rem; }
+    .social-links { display: flex; gap: 0.7rem; }
+    .social-links a {
+      width: 34px; height: 34px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.38); text-decoration: none; font-size: 0.8rem; font-weight: 700;
+      transition: all 0.2s;
+    }
+    .social-links a:hover { border-color: #60a5fa; color: #60a5fa; background: rgba(96,165,250,0.08); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .about-grid, .programs-grid, .events-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-item.tall, .gallery-item.wide { grid-row: span 1; grid-column: span 1; }
+      .slider-section { height: 70vh; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#slider" class="logo">
+    <div class="logo-icon">O</div>
+    <div>
+      <div class="logo-name">Oxford Patils Academy</div>
+      <span class="logo-tag">Est. 1998 · Excellence in Education</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#admissions">Admissions</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#admissions" class="nav-cta">Apply Now</a>
+</nav>
+
+<!-- IMAGE SLIDER -->
+<div class="slider-section" id="slider">
+  <div class="slides-wrapper" id="slidesWrapper">
+
+    <!-- Slide 1 -->
+    <div class="slide slide-1">
+      <img src="s6.jpeg" alt="School Campus">
+      <div class="slide-overlay"></div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide slide-2">
+      <img src="s1.jpeg" alt="Science Labs">
+      <div class="slide-overlay"></div>
+
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide slide-3">
+      <img src="s2.jpeg" alt="Coaching">
+      <div class="slide-overlay"></div>
+
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide slide-4">
+      <img src="s4.jpeg" alt="Legacy">
+      <div class="slide-overlay"></div>
+
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide slide-5">
+        <img src="s5.jpeg" alt="Legacy">
+      <div class="slide-overlay"></div>
+
+    </div>
+
+  </div>
+
+  <button class="slider-arrow prev" onclick="moveSlide(-1)">&#8592;</button>
+  <button class="slider-arrow next" onclick="moveSlide(1)">&#8594;</button>
+
+  <div class="slider-dots">
+    <button class="dot active" onclick="goToSlide(0)"></button>
+    <button class="dot" onclick="goToSlide(1)"></button>
+    <button class="dot" onclick="goToSlide(2)"></button>
+    <button class="dot" onclick="goToSlide(3)"></button>
+    <button class="dot" onclick="goToSlide(4)"></button>
+  </div>
+
+  <div class="slide-counter"><span id="currentSlide">1</span> / 5</div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-label">📢 Notice</div>
+  <div class="ticker-track">
+    <span>🎓 Admissions Open for 2025–26 Academic Year &nbsp;|</span>
+    <span>📅 Annual Sports Day — March 20, 2025 &nbsp;|</span>
+    <span>📝 Board Exam Results — 98% Pass Rate &nbsp;|</span>
+    <span>🏆 Oxford Patils wins State Science Olympiad &nbsp;|</span>
+    <span>🎨 Art Exhibition — April 5, Main Hall &nbsp;|</span>
+    <span>🎓 Admissions Open for 2025–26 Academic Year &nbsp;|</span>
+    <span>📅 Annual Sports Day — March 20, 2025 &nbsp;|</span>
+    <span>📝 Board Exam Results — 98% Pass Rate &nbsp;|</span>
+    <span>🏆 Oxford Patils wins State Science Olympiad &nbsp;|</span>
+    <span>🎨 Art Exhibition — April 5, Main Hall &nbsp;|</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-img-wrap">
+      <div class="about-img-box"><img src="b1.jpeg" alt="School Image"></div>
+      <div class="about-float">
+        <span class="big">25+</span>
+        <span class="small">Years of Excellence</span>
+      </div>
+    </div>
+    <div>
+      <div class="section-label">About Us</div>
+      <h2 class="section-title">A Legacy of Learning & Leadership</h2>
+      <p class="section-sub">Founded in 1998, Oxford Patils Academy has been a beacon of quality education, nurturing students to become confident, compassionate, and capable individuals ready for tomorrow's world.</p>
+      <div class="about-features">
+        <div class="feature-item">
+          <div class="feature-icon">🎯</div>
+          <div class="feature-text">
+            <h4>Mission-Driven Education</h4>
+            <p>Every program is designed around academic excellence combined with holistic development.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🔬</div>
+          <div class="feature-text">
+            <h4>State-of-the-Art Facilities</h4>
+            <p>Modern labs, digital classrooms, a 50,000-book library, and sports complex on a 15-acre campus.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🌍</div>
+          <div class="feature-text">
+            <h4>NEET · JEE · PGCET Coaching</h4>
+            <p>Long-term competitive exam coaching alongside academics from Grade 1 through Grade 12.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="programs" id="programs">
+  <div class="programs-header">
+    <div>
+      <div class="section-label">Academics</div>
+      <h2 class="section-title">Programs We Offer</h2>
+    </div>
+    <a href="#" class="btn-primary">View All Programs</a>
+  </div>
+  <div class="programs-grid">
+    <div class="program-card">
+      <div class="prog-icon-wrap prog-blue">🧒</div>
+      <h3>Primary School</h3>
+      <p>Grades 1–5. A nurturing environment where young learners build foundational skills through play-based and inquiry learning.</p>
+      <a href="#" class="program-link">Learn More →</a>
+    </div>
+    <div class="program-card">
+      <div class="prog-icon-wrap prog-sky">📚</div>
+      <h3>Middle School</h3>
+      <p>Grades 6–10. Students deepen knowledge while developing critical thinking, collaboration, and time-management skills.</p>
+      <a href="#" class="program-link">Learn More →</a>
+    </div>
+    <div class="program-card">
+      <div class="prog-icon-wrap prog-mint">🎓</div>
+      <h3>High School</h3>
+      <p>Grades 11–12. Science stream with expert faculty and dedicated mentorship for board exams.</p>
+      <a href="#" class="program-link">Learn More →</a>
+    </div>
+    <div class="program-card">
+      <div class="prog-icon-wrap prog-peach">💻</div>
+      <h3>NEET Long Term</h3>
+      <p>From 11th to 12th — full NCERT syllabus covered with deep-dive knowledge. External materials and reference books provided.</p>
+      <a href="#" class="program-link">Learn More →</a>
+    </div>
+    <div class="program-card">
+      <div class="prog-icon-wrap prog-blue">🎨</div>
+      <h3>JEE Academy</h3>
+      <p>JEE Preparation for both Prelims and Mains with experienced lecturers and structured study plans.</p>
+      <a href="#" class="program-link">Learn More →</a>
+    </div>
+    <div class="program-card">
+      <div class="prog-icon-wrap prog-mint">📐</div>
+      <h3>PGCET Preparation</h3>
+      <p>Focused coaching for Karnataka PGCET with subject experts, mock tests, and personalized mentorship.</p>
+      <a href="#" class="program-link">Learn More →</a>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="events" id="events">
+  <div class="section-label">Upcoming</div>
+  <h2 class="section-title">Events & Announcements</h2>
+  <p class="section-sub">Stay up to date with what's happening at Oxford Patils Academy.</p>
+  <div class="events-grid">
+    <div class="event-card">
+      <div class="event-date"><span class="day">20</span><span class="month">Mar</span></div>
+      <h4>Annual Sports Day 2025</h4>
+      <p>A full day of athletics, team sports, and award ceremonies celebrating our student athletes.</p>
+    </div>
+    <div class="event-card">
+      <div class="event-date"><span class="day">05</span><span class="month">Apr</span></div>
+      <h4>Annual Art Exhibition</h4>
+      <p>Students from Grades 6–12 showcase artwork in the Main Hall. Open to parents and the public.</p>
+    </div>
+    <div class="event-card">
+      <div class="event-date"><span class="day">15</span><span class="month">Apr</span></div>
+      <h4>Parent-Teacher Meeting</h4>
+      <p>Mid-term review for all grades. Individual slots available — book your appointment online.</p>
+    </div>
+    <div class="event-card">
+      <div class="event-date"><span class="day">02</span><span class="month">May</span></div>
+      <h4>Science Olympiad</h4>
+      <p>Inter-school science competition hosted by Oxford Patils. Registration deadline: April 20.</p>
+    </div>
+    <div class="event-card">
+      <div class="event-date"><span class="day">10</span><span class="month">May</span></div>
+      <h4>Graduation Ceremony</h4>
+      <p>Celebrating the Class of 2025 — a momentous occasion for students, families, and staff.</p>
+    </div>
+    <div class="event-card">
+      <div class="event-date"><span class="day">01</span><span class="month">Jun</span></div>
+      <h4>New Academic Year Begins</h4>
+      <p>Welcome back! Orientation for new students and first day of the 2025–26 year.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="section-label">Campus Life</div>
+  <h2 class="section-title">Life at Oxford Patils</h2>
+  <p class="section-sub">A glimpse into the vibrant campus life, facilities, and events that make our school extraordinary.</p>
+  <div class="gallery-grid">
+    <div class="gallery-item tall">
+      🏫
+      <div class="gallery-overlay">School Campus</div>
+    </div>
+    <div class="gallery-item">
+      🔬
+      <div class="gallery-overlay">Science Labs</div>
+    </div>
+    <div class="gallery-item">
+      📚
+      <div class="gallery-overlay">Library</div>
+    </div>
+    <div class="gallery-item">
+      🎨
+      <div class="gallery-overlay">Art Studio</div>
+    </div>
+    <div class="gallery-item wide">
+      🏃
+      <div class="gallery-overlay">Sports Ground</div>
+    </div>
+    <div class="gallery-item">
+      💻
+      <div class="gallery-overlay">Computer Lab</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-label">Voices</div>
+  <h2 class="section-title">What Our Community Says</h2>
+  <div class="testimonials-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p>Oxford Patils shaped my daughter into a confident, curious learner. The teachers genuinely care about each child's growth — academically and personally.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">P</div>
+        <div>
+          <div class="testi-name">Priya Sharma</div>
+          <div class="testi-role">Parent · Grade 9</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p>The Science labs and NEET coaching here are incredible. I secured a top NEET rank thanks to the structured training I received at Oxford Patils!</p>
+      <div class="testi-author">
+        <div class="testi-avatar">A</div>
+        <div>
+          <div class="testi-name">Arjun Mehta</div>
+          <div class="testi-role">Student · Grade 12</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p>As an alumnus, I credit Oxford Patils for my success. The values and critical thinking skills instilled here have served me throughout my entire career.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">R</div>
+        <div>
+          <div class="testi-name">Rohan Kapoor</div>
+          <div class="testi-role">Alumni · Batch of 2012</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / ADMISSIONS -->
+<section class="cta-section" id="admissions">
+  <h2>Begin Your Journey at Oxford Patils</h2>
+  <p>Admissions are now open for the 2025–26 academic year. Seats are limited — apply early!</p>
+  <div class="cta-buttons">
+    <a href="#" class="btn-white">Apply for Admission</a>
+    <a href="#contact" class="btn-ghost">Contact Us</a>
+  </div>
+</section>
+
+<!-- FOOTER / CONTACT -->
+<footer id="contact">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brand-name">Oxford Patils Academy</div>
+      <p>Committed to nurturing young minds since 1998. Education that goes beyond textbooks — shaping character, curiosity, and capability.</p>
+      <div class="footer-contact">
+        <p>📍 Nagarabetta, Muddebihal, Bijapur, Karnataka</p>
+        <p>📞 +91 93800 95756</p>
+        <p>✉️ info@oxfordpatils.edu.in</p>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Academics</h5>
+      <ul>
+        <li><a href="#programs">Primary School</a></li>
+        <li><a href="#programs">Middle School</a></li>
+        <li><a href="#programs">High School</a></li>
+        <li><a href="#programs">NEET Preparation</a></li>
+        <li><a href="#programs">JEE Preparation</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>School</h5>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#about">Faculty</a></li>
+        <li><a href="#about">Facilities</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Admissions</h5>
+      <ul>
+        <li><a href="#admissions">How to Apply</a></li>
+        <li><a href="#admissions">Fee Structure</a></li>
+        <li><a href="#admissions">Eligibility</a></li>
+        <li><a href="#admissions">Scholarships</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Oxford Patils Academy. All rights reserved.</p>
+    <div class="social-links">
+      <a href="#">f</a>
+      <a href="#">in</a>
+      <a href="#">tw</a>
+      <a href="#">yt</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  let current = 0;
+  const total = 5;
+  const wrapper = document.getElementById('slidesWrapper');
+  const dots = document.querySelectorAll('.dot');
+  const counter = document.getElementById('currentSlide');
+  let autoTimer;
+
+  // Pause CSS animation and use JS control
+  wrapper.style.animation = 'none';
+
+  function updateSlider() {
+    wrapper.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
+    wrapper.style.transform = `translateX(-${current * 20}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    counter.textContent = current + 1;
+  }
+
+  function moveSlide(dir) {
+    current = (current + dir + total) % total;
+    updateSlider();
+    resetAuto();
+  }
+
+  function goToSlide(index) {
+    current = index;
+    updateSlider();
+    resetAuto();
+  }
+
+  function resetAuto() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(() => {
+      current = (current + 1) % total;
+      updateSlider();
+    }, 5000);
+  }
+
+  // Init
+  updateSlider();
+  resetAuto();
+</script>
+
+</body>
+</html>
