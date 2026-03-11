@@ -1,0 +1,39 @@
+/* Logo container */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+/* Logo image wrapper */
+.logo-icon {
+  flex-shrink: 0;  /* prevents image from shrinking */
+  width: 65px;
+  height: 65px;
+}
+
+/* Logo image */
+.navbar-logo {
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+  display: block;
+}
+
+/* School name */
+.logo-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* Tagline */
+.logo-tag {
+  font-size: 0.75rem;
+  color: #666;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
