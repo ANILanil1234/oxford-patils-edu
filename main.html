@@ -2,10 +2,73 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Oxford Patils Academy — Home</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
+      /* Mobile Responsive Navbar */
+@media (max-width: 768px) {
+  nav {
+    padding: 0 15px;
+    height: auto;
+    flex-direction: column; /* Stacks logo and button */
+    padding-bottom: 10px;
+  }
+
+  .nav-links {
+    display: none; /* Hides the menu on mobile to prevent clutter */
+  }
+
+  .logo-name {
+    font-size: 0.9rem; /* Shrink text so it fits one line */
+  }
+
+  .nav-cta {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .slider-section {
+    height: 40vh; /* Reduces height so it doesn't take the whole screen */
+  }
+
+  .slides-wrapper {
+    width: 500%; /* Keep the width for the 5 images */
+  }
+
+  .slide img {
+    object-fit: cover; /* Prevents the image from stretching/squeezing */
+  }
+}
+@media (max-width: 768px) {
+  /* Change 2-column grids to 1-column */
+  .about-grid,
+  .about-grid-optimized,
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 30px;
+  }
+
+  /* Change 4-column gallery to 1-column */
+  .gallery-grid {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: 200px;
+  }
+
+  /* Ensure the 75%/25% footer split becomes 100% on mobile */
+  .footer-main-wrapper {
+    flex-direction: column;
+  }
+
+  .footer-content-75, .footer-map-25 {
+    flex: 1;
+    width: 100%;
+  }
+}
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
